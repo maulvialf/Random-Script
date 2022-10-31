@@ -98,8 +98,6 @@ def update(x_row):
 				inp.append(i["out"])
 
 		for perceptron in layer:
-			# gue ga ngerti cara make momentum
-			momentum = 0
 			for idx in range(len(inp)):
 				# update weight
 				perceptron['weight'][idx] +=  perceptron['delta'] * inp[idx] * learning_rate 
@@ -331,8 +329,6 @@ M = 10
 L = 3
 # learning rate
 learning_rate = 0.1
-# momentum
-momentum = 0
 print("[*] Read data")
 dataset = read_data()
 # pisahkan atribut dan kelas
