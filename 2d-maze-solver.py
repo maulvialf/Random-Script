@@ -3,46 +3,45 @@ from collections import deque
 from pprint import pprint as pp
 import sys
 
-peta = """\
-h*~~~*~*~*~~**~~~~*
-~~~~~**~~~*~~*~~~*~
-~~~**~~**~~*~~~~*~*
-~~****~~*~~~~*~**~~
-~~**~~~~~~~~~~~*~~*
-~~~~~~~~***~~~*~~*~
-~~***~~~~**~~~*~~~~
-~~*~*~*~~~~*~~~*~~~
-*~~*~*~~~~*~~~~~~*~
-*~*~~~~~~~~~~*~~~*~
-*~*~~~~~~**~/bin/su\
-"""
-
-move = ["a", "s", "d", "w"]
-
-petaline = peta.split("\n")
-
-leny = len(petaline)
-lenx = len(list(petaline[0]))
-petab = [[0 for i in range(lenx)] for i in range(leny)]
-
-yy = 0
-for petax in petaline:
-	xx = 0
-	for p in petax:
-		petab[yy][xx] = p
-		xx += 1
-	yy += 1
-
+# helper function
 def printnoline(string):
 	sys.stdout.write(string)
 
 
+"""
+should modify this depends on the map
+"""
+def parsemap(peta):
+	petaline = peta.split("\n")
+	leny = len(petaline)
+	lenx = len(list(petaline[0]))
+	petab = [[0 for i in range(lenx)] for i in range(leny)]
+	yy = 0
+	for petax in petaline:
+		xx = 0
+		for p in petax:
+			# allow
+			if(p == "~"):
+				petab[yy][xx] = 0
+			# block
+			elif(p == "*"):
+				petab[yy][xx] = 1
+			# player
+			elif(p == "h"):
+				petab[yy][xx] = 2
+			# target
+			elif(p == "u"):
+				petab[yy][xx] = 3
+			xx += 1
+		yy += 1
+
+	return petab, lenx, leny
+
 def printmap(peta):
 	for y in range(leny):
 		for x in range(lenx):
-			printnoline(peta[y][x])
+			printnoline(str(peta[y][x]))
 		print()
-
 
 def convertmove(move):
 	moveset = 0
@@ -72,13 +71,13 @@ def jalanpair(move, petax, koordinathero, deadend):
 	elif(y + movey > leny - 1):
 		return (petax, 0, koordinathero)
 
-	elif(petax[y + movey][x + movex] == "u"):
+	elif(petax[y + movey][x + movex] == 3):
 		return (petax, 2, koordinathero)
 
-	elif(petax[y + movey][x + movex] == "~"):
+	elif(petax[y + movey][x + movex] == 0):
 		newpeta = petax.copy()		
-		newpeta[y][x] = "."
-		newpeta[y+movey][x+movex] = "h"
+		newpeta[y][x] = 4
+		newpeta[y+movey][x+movex] = 2
 		return (newpeta, 1, (x + movex, y + movey))
 	else:
 		return (petax, 0, koordinathero)
@@ -86,12 +85,28 @@ def jalanpair(move, petax, koordinathero, deadend):
 def getplayer(peta):
 	for y in range(leny):
 		for x in range(lenx):
-			if(peta[y][x] == 'h'):
+			if(peta[y][x] == 2):
 				return (x, y)
 
 	return -1
 
+peta = """\
+h*~~~*~*~*~~**~~~~*
+~~~~~**~~~*~~*~~~*~
+~~~**~~**~~*~~~~*~*
+~~****~~*~~~~*~**~~
+~~**~~~~~~~~~~~*~~*
+~~~~~~~~***~~~*~~*~
+~~***~~~~**~~~*~~~~
+~~*~*~*~~~~*~~~*~~~
+*~~*~*~~~~*~~~~~~*~
+*~*~~~~~~~~~~*~~~*~
+*~*~~~~~~**~/bin/su\
+"""
+
+petab, lenx, leny = parsemap(peta)
 koordinathero = getplayer(petab)
+assert koordinathero != -1
 
 kotak = deque()
 kotakx = ["a", "s", "w", "d"]
@@ -118,6 +133,8 @@ while kotak:
 	elif(koordinathero in deadend):
 		continue
 	else:	
+		printmap(newpetab)
+		print()		
 		newdeadend = deadend.copy()
 		newdeadend.append(koordinathero)
 		for x in kotakx:
