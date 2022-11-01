@@ -112,7 +112,7 @@ kotak = deque()
 kotakx = ["a", "s", "w", "d"]
 
 for x in kotakx:
-	kotak.append(("", x, [koordinathero], petab, koordinathero))
+	kotak.append(("", x, [koordinathero], petab, koordinathero, 0))
 
 while kotak:
 	u = kotak.popleft()
@@ -121,21 +121,21 @@ while kotak:
 	deadend  = u[2]
 	petabx   = u[3]
 	koordinathero   = u[4]
+	distance   = u[5]
 	oldkoordinathero = koordinathero
 	newpetab, status, koordinathero = jalanpair(move, petabx, oldkoordinathero, deadend)
 
 	if(status == 2):
 		print("gotflag")
-		print(curr + move)
+		print("move", curr + move)
+		print("distance", distance + 1)
 		break
 	elif(status == 0):
 		continue
 	elif(koordinathero in deadend):
 		continue
 	else:	
-		printmap(newpetab)
-		print()		
 		newdeadend = deadend.copy()
 		newdeadend.append(koordinathero)
 		for x in kotakx:
-			kotak.append((curr + move, x, newdeadend, newpetab, koordinathero))
+			kotak.append((curr + move, x, newdeadend, newpetab, koordinathero, distance+1))
