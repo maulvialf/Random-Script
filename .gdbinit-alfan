@@ -1,0 +1,7 @@
+#  source ~/.gef.py
+#  source /home/alfan/pwndbg/gdbinit.py
+source ~/peda/peda.py
+
+define pie
+  b *($arg0)
+end
