@@ -2,6 +2,6 @@
 #  source /home/alfan/pwndbg/gdbinit.py
 source ~/peda/peda.py
 
-define pie
-  b *($arg0)
+define pie    
+  b *(0x0000555555554000+$arg0)
 end
