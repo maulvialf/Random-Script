@@ -5,3 +5,8 @@ source ~/peda/peda.py
 define pie    
   b *(0x0000555555554000+$arg0)
 end
+
+
+define pie32
+  b *(0x56555000+$arg0)
+end
