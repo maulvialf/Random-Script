@@ -20,7 +20,7 @@ s.add(a1[3] == a1[8])
 while True:
     www = s.check()    
     model = s.model()
-    manga = [0 for i in range(37)]
+    manga = [0 for i in range(LEN)]
     for i in range(37):
         index = eval(str(model[i])[2:])
         manga[index] = eval(str(model[model[i]]))
@@ -39,7 +39,7 @@ while True:
     # add different candidate
     ev = "Or("
     for j in range(LEN):
-        ev += "a1[{}] != {} , ".format(i, manga[i])
+        ev += "a1[{}] != {} , ".format(j, manga[j])
     ev = ev[:-2]
     ev += ")"
     exec("s.add({})".format(ev))
