@@ -7,7 +7,7 @@ s = Solver()
 a1 = [BitVec(i, 8) for i in range(LEN)]
 
 # ========================================
-for i in range(37):
+for i in range(LEN):
     s.add(0x20 < a1[i])
     s.add(0x7f > a1[i])
 
@@ -21,7 +21,7 @@ while True:
     www = s.check()    
     model = s.model()
     manga = [0 for i in range(LEN)]
-    for i in range(37):
+    for i in range(LEN):
         index = eval(str(model[i])[2:])
         manga[index] = eval(str(model[model[i]]))
     
