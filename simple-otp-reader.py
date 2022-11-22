@@ -9,7 +9,9 @@ while True:
 	import pytesseract
 
 	img = cv2.imread('otp.png')
+	# invert image
 	img = cv2.bitwise_not(img)
+	# change to grayscale
 	grayscale = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 	threshold = cv2.adaptiveThreshold(grayscale, 255, \
 					  cv2.ADAPTIVE_THRESH_GAUSSIAN_C, \
@@ -19,6 +21,7 @@ while True:
 	custom_config = r'outputbase digits psm=8'
 	# custom_config = r'-psm 7 -c tessedit_char_whitelist=1234567890'
 
+	# read tesseract number
 	number = pytesseract.image_to_string(threshold, config=custom_config)
 
 	# req = requests.post(burp0_url, headers=burp0_headers, data=burp0_data)
