@@ -17,5 +17,5 @@ def parserjs(jscode):
     print(len(jscode))
     out = check_output("node {}".format(tmpfile)).strip()
     print(out)
-    os.remove(file)
+    os.remove(tmpfile)
     return out
