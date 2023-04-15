@@ -11,6 +11,11 @@ for i in range(LEN):
     s.add(0x20 < a1[i])
     s.add(0x7f > a1[i])
 
+# alphanumeric
+for i in range(len(s)):
+    solver.add(Or(And(s[i] >= '0', s[i] <= '9'), And(s[i] >= 'a', s[i] <= 'z'), And(s[i] >= 'A', s[i] <= 'Z')))
+
+    
 # comparison
 s.add(a1[3] == a1[8])
 
