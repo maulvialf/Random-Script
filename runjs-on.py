@@ -9,12 +9,13 @@ def get_random_string(length):
     return result_str
 
 def parserjs(jscode):
-    tmpfile = "alfanrandom"+get_random_string(10)
+    # make sure create random folder (wanna use /tmp/random, but this script sometimes run on my windows. zzz)
+    tmpfile = "random/alfanrandom"+get_random_string(10)
     file = open(tmpfile, "w")
     file.write(jscode)
     file.close()
     print(len(jscode))
     out = check_output("node {}".format(tmpfile)).strip()
     print(out)
-    os.remove(file)
+    os.remove(tmpfile)
     return out

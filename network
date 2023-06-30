@@ -1,0 +1,3 @@
+$ sudo nmcli device status
+$ sudo nmcli networking off
+$ sudo nmcli networking on
