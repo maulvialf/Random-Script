@@ -1,6 +1,5 @@
 # Java snippet
 
-
 ## Stack trace
 
 ```java
